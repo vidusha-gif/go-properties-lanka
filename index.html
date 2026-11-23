@@ -439,7 +439,8 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .hero-subtitle {
+    .hero-subtitle, #heroMainSubtitle {
+      white-space: pre-line !important;
       font-size: 1.15rem;
       line-height: 1.65;
       color: rgba(248, 250, 252, 0.94);
@@ -5421,13 +5422,27 @@
 
         <!-- Main Headline -->
         <h1 class="hero-title" id="heroMainHeadline">
-          Find &amp; Manage <span>Premier Properties</span>
+          Find Your Ideal Property <span>Across Sri Lanka with Us!</span>
         </h1>
 
-        <!-- Subheadline (Short & Punchy 1 Sentence) -->
-        <p class="hero-subtitle" id="heroMainSubtitle">
-          Verified homes, villas, and end-to-end property management across Sri Lanka.
-        </p>
+        <!-- Subheadline -->
+        <p class="hero-subtitle" id="heroMainSubtitle">Welcome to Go Properties Lanka
+
+Your Property. Our Priority. Your Peace of Mind.
+
+Buy. Sell. Manage. We Handle It All!
+
+Your trusted real estate and property management partner in Sri Lanka.
+
+Looking to buy your dream property, sell at the best price, or need someone reliable to look after your investment?
+
+We’ve Got You Covered!
+
+From buying and selling to complete property care and management, we make everything simple, secure, and stress-free.
+
+Contact Us Today — Your Property Is in Good Hands!
+
+WhatsApp: +94 77 742 6321</p>
 
         <!-- 2 Sleek Floating Glass Pills -->
         <div class="hero-float-pills-row">
@@ -6459,7 +6474,7 @@
             </div>
             <div class="drawer-input-group">
               <label class="drawer-label" for="editHeroSubtitle">Hero Subtitle</label>
-              <textarea id="editHeroSubtitle" class="drawer-input-control" rows="3" oninput="updateHeroSubtitle(this.value)"></textarea>
+              <textarea id="editHeroSubtitle" class="drawer-input-control" rows="8" oninput="updateHeroSubtitle(this.value)" style="white-space: pre-wrap; font-family: inherit; font-size: 0.85rem; line-height: 1.5;"></textarea>
             </div>
           </div>
 
@@ -7440,8 +7455,8 @@
       brandName: "Go Properties Lanka",
       brandLogo: "",
       headerLogoDisplay: "both",
-      heroHeadline: "Find & Manage Premier Properties",
-      heroSubtitle: "Verified homes, villas, and end-to-end property management across Sri Lanka.",
+      heroHeadline: "Find Your Ideal Property Across Sri Lanka with Us!",
+      heroSubtitle: "Welcome to Go Properties Lanka\n\nYour Property. Our Priority. Your Peace of Mind.\n\nBuy. Sell. Manage. We Handle It All!\n\nYour trusted real estate and property management partner in Sri Lanka.\n\nLooking to buy your dream property, sell at the best price, or need someone reliable to look after your investment?\n\nWe’ve Got You Covered!\n\nFrom buying and selling to complete property care and management, we make everything simple, secure, and stress-free.\n\nContact Us Today — Your Property Is in Good Hands!\n\nWhatsApp: +94 77 742 6321",
       phone: "+94 77 123 4567",
       whatsapp: "+94 77 123 4567",
       email: "info@gopropertieslanka.com",
@@ -7555,21 +7570,11 @@
       if (!siteConfig.heroImage || siteConfig.heroImage.includes("photo-1600596542815")) {
         siteConfig.heroImage = DEFAULT_CONFIG.heroImage;
       }
-      // Always normalize heroHeadline and heroSubtitle to short, punchy copy if legacy or old strings exist
-      // Migrate legacy default strings to the short default tagline
-      if (!siteConfig.heroHeadline ||
-          siteConfig.heroHeadline === "Find Your Ideal Property Across Sri Lanka with Us!" ||
-          siteConfig.heroHeadline === "Find Your Ideal Property Across Sri Lanka with us" ||
-          siteConfig.heroHeadline === "Find Your Ideal Property Across Sri Lanka" ||
-          siteConfig.heroHeadline === "Discover Premier Properties Across Sri Lanka & Worldwide" ||
-          siteConfig.heroHeadline.includes("Hanthana & Digana")) {
+      // Migrate old default headline & subtitle if unset or still on obsolete default
+      if (!siteConfig.heroHeadline || siteConfig.heroHeadline === "Find & Manage Premier Properties" || siteConfig.heroHeadline === "Discover Premier Properties Across Sri Lanka & Worldwide") {
         siteConfig.heroHeadline = DEFAULT_CONFIG.heroHeadline;
       }
-      if (!siteConfig.heroSubtitle ||
-          siteConfig.heroSubtitle.startsWith("Welcome to Go Properties Lanka") ||
-          siteConfig.heroSubtitle.includes("Your Property. Our Priority.") ||
-          siteConfig.heroSubtitle.includes("Victoria Golf Sanctuary") ||
-          siteConfig.heroSubtitle.includes("residential, commercial, and investment opportunities in premier locations")) {
+      if (!siteConfig.heroSubtitle || siteConfig.heroSubtitle === "Verified homes, villas, and end-to-end property management across Sri Lanka." || siteConfig.heroSubtitle.includes("worldwide")) {
         siteConfig.heroSubtitle = DEFAULT_CONFIG.heroSubtitle;
       }
       if (!siteConfig.phone) siteConfig.phone = "+94 77 123 4567";
@@ -8413,36 +8418,23 @@
       const heroHeadEl = document.getElementById("heroMainHeadline") || document.getElementById("heroHeadline");
       const heroSubEl = document.getElementById("heroMainSubtitle") || document.getElementById("heroSubtitle");
 
-      // Migrate legacy default strings to short default tagline if present
-      if (siteConfig.heroHeadline === "Find Your Ideal Property Across Sri Lanka with Us!" ||
-          siteConfig.heroHeadline === "Find Your Ideal Property Across Sri Lanka with us" ||
-          siteConfig.heroHeadline === "Find Your Ideal Property Across Sri Lanka" ||
-          siteConfig.heroHeadline === "Discover Premier Properties Across Sri Lanka & Worldwide" ||
-          (siteConfig.heroHeadline && siteConfig.heroHeadline.includes("Hanthana & Digana"))) {
-        siteConfig.heroHeadline = DEFAULT_CONFIG.heroHeadline;
-      }
-      if (siteConfig.heroSubtitle && (
-          siteConfig.heroSubtitle.startsWith("Welcome to Go Properties Lanka") ||
-          siteConfig.heroSubtitle.includes("Your Property. Our Priority.") ||
-          siteConfig.heroSubtitle.includes("Victoria Golf Sanctuary") ||
-          siteConfig.heroSubtitle.includes("residential, commercial, and investment opportunities in premier locations")
-      )) {
-        siteConfig.heroSubtitle = DEFAULT_CONFIG.heroSubtitle;
-      }
-
       const activeHeadline = (siteConfig.heroHeadline && siteConfig.heroHeadline.trim())
         ? siteConfig.heroHeadline.trim()
-        : (DEFAULT_CONFIG.heroHeadline || "Find & Manage Premier Properties");
+        : DEFAULT_CONFIG.heroHeadline;
 
       const activeSubtitle = (siteConfig.heroSubtitle && siteConfig.heroSubtitle.trim())
         ? siteConfig.heroSubtitle.trim()
-        : (DEFAULT_CONFIG.heroSubtitle || "Verified homes, villas, and end-to-end property management across Sri Lanka.");
+        : DEFAULT_CONFIG.heroSubtitle;
 
       siteConfig.heroHeadline = activeHeadline;
       siteConfig.heroSubtitle = activeSubtitle;
 
       if (heroHeadEl) {
-        if (activeHeadline === "Find & Manage Premier Properties" || activeHeadline.includes("Premier Properties")) {
+        if (activeHeadline.includes("Across Sri Lanka with Us!")) {
+          heroHeadEl.innerHTML = activeHeadline.replace(/(Across Sri Lanka with Us!)/i, "<span>$1</span>");
+        } else if (activeHeadline.includes("Across Sri Lanka")) {
+          heroHeadEl.innerHTML = activeHeadline.replace(/(Across Sri Lanka.*)/i, "<span>$1</span>");
+        } else if (activeHeadline.includes("Premier Properties")) {
           heroHeadEl.innerHTML = activeHeadline.replace(/(Premier Properties)/i, "<span>$1</span>");
         } else if (activeHeadline.includes("<")) {
           heroHeadEl.innerHTML = activeHeadline;
@@ -8535,8 +8527,8 @@
       // If heroImage is a base64 data URL, keep editHeroImgUrl empty so old URL doesn't show or override
       const isHeroDataUrl = siteConfig.heroImage && siteConfig.heroImage.startsWith("data:");
       setVal("editHeroImgUrl", isHeroDataUrl ? "" : (siteConfig.heroImage || ""));
-      setVal("editHeroHeadline", siteConfig.heroHeadline || DEFAULT_CONFIG.heroHeadline || "Find & Manage Premier Properties");
-      setVal("editHeroSubtitle", siteConfig.heroSubtitle || DEFAULT_CONFIG.heroSubtitle || "Verified homes, villas, and end-to-end property management across Sri Lanka.");
+      setVal("editHeroHeadline", siteConfig.heroHeadline || DEFAULT_CONFIG.heroHeadline);
+      setVal("editHeroSubtitle", siteConfig.heroSubtitle || DEFAULT_CONFIG.heroSubtitle);
       const adminHeroPreview = document.getElementById("adminHeroImgPreview");
       if (adminHeroPreview) adminHeroPreview.src = siteConfig.heroImage || DEFAULT_CONFIG.heroImage;
       setVal("editPhone", siteConfig.phone || "+94 77 123 4567");
@@ -9363,27 +9355,29 @@
     }
 
     function updateHeroHeadline(val) {
-      const activeVal = (val && val.trim()) ? val.trim() : DEFAULT_CONFIG.heroHeadline;
-      siteConfig.heroHeadline = activeVal;
+      siteConfig.heroHeadline = (val !== undefined && val !== null) ? val : DEFAULT_CONFIG.heroHeadline;
       const el = document.getElementById("heroMainHeadline") || document.getElementById("heroHeadline");
       if (el) {
-        if (activeVal.includes("Premier Properties")) {
-          el.innerHTML = activeVal.replace(/(Premier Properties)/i, "<span>$1</span>");
-        } else if (activeVal.includes("<")) {
-          el.innerHTML = activeVal;
+        if (siteConfig.heroHeadline.includes("Across Sri Lanka with Us!")) {
+          el.innerHTML = siteConfig.heroHeadline.replace(/(Across Sri Lanka with Us!)/i, "<span>$1</span>");
+        } else if (siteConfig.heroHeadline.includes("Across Sri Lanka")) {
+          el.innerHTML = siteConfig.heroHeadline.replace(/(Across Sri Lanka.*)/i, "<span>$1</span>");
+        } else if (siteConfig.heroHeadline.includes("Premier Properties")) {
+          el.innerHTML = siteConfig.heroHeadline.replace(/(Premier Properties)/i, "<span>$1</span>");
+        } else if (siteConfig.heroHeadline.includes("<")) {
+          el.innerHTML = siteConfig.heroHeadline;
         } else {
-          el.textContent = activeVal;
+          el.textContent = siteConfig.heroHeadline;
         }
       }
       saveState();
     }
 
     function updateHeroSubtitle(val) {
-      const activeVal = (val && val.trim()) ? val.trim() : DEFAULT_CONFIG.heroSubtitle;
-      siteConfig.heroSubtitle = activeVal;
+      siteConfig.heroSubtitle = (val !== undefined && val !== null) ? val : DEFAULT_CONFIG.heroSubtitle;
       const el = document.getElementById("heroMainSubtitle") || document.getElementById("heroSubtitle");
       if (el) {
-        el.textContent = activeVal;
+        el.textContent = siteConfig.heroSubtitle;
       }
       saveState();
     }
@@ -9732,8 +9726,8 @@
       const rawHeroHead = editHeroHeadEl ? editHeroHeadEl.value.trim() : "";
       const rawHeroSub = editHeroSubEl ? editHeroSubEl.value.trim() : "";
       
-      siteConfig.heroHeadline = rawHeroHead || DEFAULT_CONFIG.heroHeadline || "Find & Manage Premier Properties";
-      siteConfig.heroSubtitle = rawHeroSub || DEFAULT_CONFIG.heroSubtitle || "Verified homes, villas, and end-to-end property management across Sri Lanka.";
+      siteConfig.heroHeadline = rawHeroHead || DEFAULT_CONFIG.heroHeadline;
+      siteConfig.heroSubtitle = rawHeroSub || DEFAULT_CONFIG.heroSubtitle;
       
       const editUsdEl = document.getElementById("editUsdRate");
       if (editUsdEl && !isNaN(parseFloat(editUsdEl.value))) siteConfig.usdRate = parseFloat(editUsdEl.value);
@@ -10727,20 +10721,11 @@
               if (!siteConfig.heroImage || siteConfig.heroImage.includes("photo-1600596542815")) {
                 siteConfig.heroImage = DEFAULT_CONFIG.heroImage;
               }
-              // Migrate legacy default strings to short default tagline
-              if (!siteConfig.heroHeadline ||
-                  siteConfig.heroHeadline === "Find Your Ideal Property Across Sri Lanka with Us!" ||
-                  siteConfig.heroHeadline === "Find Your Ideal Property Across Sri Lanka with us" ||
-                  siteConfig.heroHeadline === "Find Your Ideal Property Across Sri Lanka" ||
-                  siteConfig.heroHeadline === "Discover Premier Properties Across Sri Lanka & Worldwide" ||
-                  siteConfig.heroHeadline.includes("Hanthana & Digana")) {
+              // Preserve Firestore saved headline and subtitle without resetting to old tagline
+              if (!siteConfig.heroHeadline || siteConfig.heroHeadline === "Find & Manage Premier Properties" || siteConfig.heroHeadline === "Discover Premier Properties Across Sri Lanka & Worldwide") {
                 siteConfig.heroHeadline = DEFAULT_CONFIG.heroHeadline;
               }
-              if (!siteConfig.heroSubtitle ||
-                  siteConfig.heroSubtitle.startsWith("Welcome to Go Properties Lanka") ||
-                  siteConfig.heroSubtitle.includes("Your Property. Our Priority.") ||
-                  siteConfig.heroSubtitle.includes("Victoria Golf Sanctuary") ||
-                  siteConfig.heroSubtitle.includes("residential, commercial, and investment opportunities in premier locations")) {
+              if (!siteConfig.heroSubtitle || siteConfig.heroSubtitle === "Verified homes, villas, and end-to-end property management across Sri Lanka." || siteConfig.heroSubtitle.includes("worldwide")) {
                 siteConfig.heroSubtitle = DEFAULT_CONFIG.heroSubtitle;
               }
 
